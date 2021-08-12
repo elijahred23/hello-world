@@ -13,5 +13,49 @@
 	<body>
 		<h1>Hello World</h1>
 		<canvas id = "my_canvas"></canvas>
+		<script>
+			const canvas = document.getElementById("my_canvas");
+			const c = canvas.getContext("2d");
+			var height = canvas.height = window.innerHeight;
+			var width = canvas.width = window.innerWidth;		
+			class circle{
+				constructor(){
+					this.x = width/2;
+					this.y = height/2;
+					this.color = "red";
+					this.width = 60;
+					this.height = 10;
+					this.angle = 0;
+					this.radius = 50;
+				}
+				update(){
+					const dy = 2*Math.sin(this.angle);
+					const dx = 2*Math.cos(this.angle);
+					this.x += dx;
+					this.y += dy;
+					this.angle+=1/this.radius;
+					
+				}
+				draw(){
+					c.beginPath();
+					c.fillStyle = this.color;
+					c.rect(this.x,this.y,this.width,this.height);
+					c.fill();
+				}
+				update_and_draw(){
+					this.update();
+					this.draw();
+				}
+			}
+			let my_circle = new circle();
+
+			function animate(){
+				c.clearRect(0,0,width,height);
+				my_circle.update_and_draw();				
+				requestAnimationFrame(animate);
+			}
+			animate();
+
+		</script>
 	</body>
 </html>
